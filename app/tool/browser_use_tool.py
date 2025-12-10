@@ -13,6 +13,7 @@ from pydantic_core.core_schema import ValidationInfo
 from app.config import config
 from app.llm import LLM
 from app.tool.base import BaseTool, ToolResult
+from app.tool.covenant_filter import sanctify_url
 from app.tool.web_search import WebSearch
 
 
@@ -235,6 +236,14 @@ class BrowserUseTool(BaseTool, Generic[Context]):
                         return ToolResult(
                             error="URL is required for 'go_to_url' action"
                         )
+                    
+                    # SANCTIFICATION: Covenant filter check
+                    is_sanctified, reason = sanctify_url(url, strict_mode=False)
+                    if not is_sanctified:
+                        return ToolResult(
+                            error=f"URL blocked by covenant filter: {reason}. URL: {url}"
+                        )
+                    
                     page = await context.get_current_page()
                     await page.goto(url)
                     await page.wait_for_load_state()

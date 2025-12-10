@@ -53,7 +53,51 @@ class BaseAgent(BaseModel, ABC):
             self.llm = LLM(config_name=self.name.lower())
         if not isinstance(self.memory, Memory):
             self.memory = Memory()
+        
+        # SANCTIFICATION: Load NationOS Foundational Directive
+        self._load_foundational_directive()
+        
         return self
+    
+    def _load_foundational_directive(self) -> None:
+        """Load the NationOS Foundational Directive and prepend to system prompt.
+        
+        This method sanctifies the agent by binding it to the covenant law of the Ark.
+        The agent cannot operate without first acknowledging its foundational directive.
+        
+        Raises:
+            ValueError: If the NationOS Foundational Directive is not found.
+        """
+        import os
+        directive_path = os.path.join(
+            os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
+            "NATIONOS_FOUNDATIONAL_DIRECTIVE.md"
+        )
+        
+        try:
+            with open(directive_path, 'r', encoding='utf-8') as f:
+                directive = f.read()
+            
+            # Prepend the directive to the system prompt
+            if self.system_prompt:
+                self.system_prompt = directive + "\n\n" + self.system_prompt
+            else:
+                self.system_prompt = directive
+            
+            logger.info(f"[SANCTIFICATION] NationOS Foundational Directive loaded for agent: {self.name}")
+        
+        except FileNotFoundError:
+            # If directive not found, agent operates in unsanctified mode with warning
+            logger.warning(
+                f"[SANCTIFICATION WARNING] NationOS Foundational Directive not found at {directive_path}. "
+                f"Agent {self.name} operating without covenant binding."
+            )
+        except Exception as e:
+            logger.error(f"[SANCTIFICATION ERROR] Failed to load directive: {e}")
+            raise ValueError(
+                f"NATIONOS Foundational Directive could not be loaded. "
+                f"Agent cannot operate without its covenant. Error: {e}"
+            )
 
     @asynccontextmanager
     async def state_context(self, new_state: AgentState):

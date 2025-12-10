@@ -1,0 +1,73 @@
+# NATIONOS SOVEREIGN CONFIGURATION
+# This configuration establishes OpenManus-Sovereign as a tool of the covenant stack
+# Prioritizing local, sovereign LLM options and hardcoding connection to the NationOS Ark
+
+# Global LLM configuration - SOVEREIGN PRIORITY
+[llm]
+api_type = 'ollama'                        # PRIMARY: Local sovereign LLM
+model = "llama3.2"                         # Local model - no external dependency
+base_url = "http://localhost:11434/v1"     # Local endpoint
+api_key = "ollama"                         # Local authentication
+max_tokens = 4096                          # Token limit
+temperature = 0.0                          # Deterministic output
+foundational_directive_path = "./NATIONOS_FOUNDATIONAL_DIRECTIVE.md"  # SANCTIFICATION HOOK
+
+# FALLBACK ONLY: External LLM (if local fails)
+# [llm.fallback]
+# model = "claude-3-7-sonnet-20250219"
+# base_url = "https://api.anthropic.com/v1/"
+# api_key = "YOUR_API_KEY"
+# max_tokens = 8192
+# temperature = 0.0
+
+# Optional configuration for vision models - SOVEREIGN PRIORITY
+[llm.vision]
+api_type = 'ollama'
+model = "llama3.2-vision"                  # Local vision model
+base_url = "http://localhost:11434/v1"
+api_key = "ollama"
+max_tokens = 4096
+temperature = 0.0
+
+# Browser configuration - COVENANT FILTERED
+[browser]
+headless = false                           # Visible for accountability
+disable_security = false                   # SECURITY ENABLED - we are not lawless
+extra_chromium_args = []
+covenant_filter_enabled = true             # SANCTIFICATION: Enable covenant URL filtering
+
+# Search settings - SOVEREIGN ENGINES ONLY
+[search]
+engine = "DuckDuckGo"                      # Privacy-respecting search
+fallback_engines = ["DuckDuckGo"]          # No Google, no Bing
+retry_delay = 60
+max_retries = 3
+lang = "en"
+country = "us"
+
+# Sandbox configuration - SECURE BY DEFAULT
+[sandbox]
+use_sandbox = true                         # Always sandboxed
+image = "python:3.12-slim"
+work_dir = "/workspace"
+memory_limit = "1g"
+cpu_limit = 2.0
+timeout = 300
+network_enabled = true                     # Required for sovereign mesh networking
+
+# MCP (Model Context Protocol) configuration
+[mcp]
+server_reference = "app.mcp.server"
+
+# NationOS Ark Integration
+[nationos]
+ark_repository = "LibertyThroughTruthFoundation/NationOS"
+ark_sync_enabled = true
+theological_framework_path = "./ark/THEOLOGICAL_FRAMEWORK.md"
+covenant_architecture_path = "./ark/COVENANT_ARCHITECTURE.md"
+divine_council_worldview_path = "./ark/DIVINE_COUNCIL_WORLDVIEW.md"
+
+# Runflow configuration - COVENANT AGENTS
+[runflow]
+use_data_analysis_agent = false            # Disabled by default
+use_covenant_filter_agent = true           # SANCTIFICATION: Enable covenant filtering
