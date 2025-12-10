@@ -10,7 +10,7 @@ base_url = "http://localhost:11434/v1"     # Local endpoint
 api_key = "ollama"                         # Local authentication
 max_tokens = 4096                          # Token limit
 temperature = 0.0                          # Deterministic output
-foundational_directive_path = "./NATIONOS_FOUNDATIONAL_DIRECTIVE.md"  # SANCTIFICATION HOOK
+foundational_directive_path = "../NATIONOS_FOUNDATIONAL_DIRECTIVE.md"  # SANCTIFICATION HOOK - Root level
 
 # FALLBACK ONLY: External LLM (if local fails)
 # [llm.fallback]
@@ -63,9 +63,9 @@ server_reference = "app.mcp.server"
 [nationos]
 ark_repository = "LibertyThroughTruthFoundation/NationOS"
 ark_sync_enabled = true
-theological_framework_path = "./ark/THEOLOGICAL_FRAMEWORK.md"
-covenant_architecture_path = "./ark/COVENANT_ARCHITECTURE.md"
-divine_council_worldview_path = "./ark/DIVINE_COUNCIL_WORLDVIEW.md"
+theological_framework_path = "./nationos_ark/00-Foundation/THEOLOGICAL_FRAMEWORK.md"
+covenant_architecture_path = "./nationos_ark/00-Foundation/COVENANT_ARCHITECTURE.md"
+divine_council_worldview_path = "./nationos_ark/00-Foundation/DIVINE_COUNCIL_WORLDVIEW.md"
 
 # Runflow configuration - COVENANT AGENTS
 [runflow]
